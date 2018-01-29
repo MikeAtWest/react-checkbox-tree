@@ -8,6 +8,39 @@
 
 > A simple and elegant checkbox tree for React.
 
+
+# This is a FORK of the original react-checkbox-tree
+
+The original is available at https://github.com/jakezatecky/react-checkbox-tree
+
+The original has an issue where you if you untick all the children of a node, the parent node also becomes unticked. This means that a parent node can't be ticked if all of it's child nodes are unticked. 
+
+To make it build, I have:
+* Commented out references to SCSS and ES linting.
+* Run 'gulp build' to create the /lib folder (which contaisn the compiled code used by the module).
+* Pushed the changes, including the built /lib folder to this repo.
+
+Now you can add a reference to this module in another project via:
+
+```
+npm install MikeAtWest/react-checkbox-tree --save
+```
+
+To update the code, you'll need to 
+* Check out a copy of this repo via git clone https://github.com/MikeAtWest/react-checkbox-tree.git
+* Make changes to the /src/js files.
+* gulp build (which will update the contents of the /lib folder)
+* git add .
+* git commit -m "Comment"
+* git push 
+
+Then in your referring project:
+* npm update MikeAtWest/react-checkbox-tree --save
+
+
+
+# Original docs:
+
 ![Demo](demo.gif)
 
 ## Usage
