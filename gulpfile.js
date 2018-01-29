@@ -1,10 +1,10 @@
 const gulp = require('gulp');
-const eslint = require('gulp-eslint');
+// const eslint = require('gulp-eslint');
 const mocha = require('gulp-mocha');
 const header = require('gulp-header');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
-const scsslint = require('gulp-scss-lint');
+// const scsslint = require('gulp-scss-lint');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const pkg = require('./package.json');
@@ -21,9 +21,9 @@ gulp.task('test-script-format', () => (
         './test/**/*.js',
         './*.js',
     ])
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failOnError())
+        //.pipe(eslint())
+        //.pipe(eslint.format())
+        //.pipe(eslint.failOnError())
 ));
 
 gulp.task('test-mocha', ['test-script-format'], () => (
@@ -47,8 +47,8 @@ gulp.task('build-script', ['test'], () => (
 
 gulp.task('build-style', () => (
     gulp.src('./src/scss/**/*.scss')
-        .pipe(scsslint())
-        .pipe(scsslint.failReporter())
+        //.pipe(scsslint())
+        //.pipe(scsslint.failReporter())
         .pipe(sass({
             outputStyle: 'expanded',
         }).on('error', sass.logError))
@@ -62,8 +62,8 @@ gulp.task('build', ['build-script', 'build-style']);
 
 gulp.task('build-examples-style', () => (
     gulp.src('./examples/src/scss/**/*.scss')
-        .pipe(scsslint())
-        .pipe(scsslint.failReporter())
+        //.pipe(scsslint())
+        //.pipe(scsslint.failReporter())
         .pipe(sass({
             outputStyle: 'expanded',
         }).on('error', sass.logError))
