@@ -17,7 +17,7 @@ The original has an issue where you if you untick all the children of a node, th
 
 To make it build, I have:
 * Commented out references to SCSS and ES linting.
-* Run 'gulp build' to create the /lib folder (which contaisn the compiled code used by the module).
+* Run 'gulp build' to create the /lib folder (which contains the compiled code used by the module).
 * Pushed the changes, including the built /lib folder to this repo.
 
 Now you can add a reference to this module in another project via:
@@ -28,8 +28,11 @@ npm install MikeAtWest/react-checkbox-tree --save
 
 To update the code, you'll need to 
 * Check out a copy of this repo via git clone https://github.com/MikeAtWest/react-checkbox-tree.git
+* git examples (to run build and creation of /examples code, which runs with BrowserSync for hot reloading while developing)
 * Make changes to the /src/js files.
-* gulp build (which will update the contents of the /lib folder)
+
+* Once done, then gulp build (which will update the contents of the /lib folder)
+
 * git add .
 * git commit -m "Comment"
 * git push 

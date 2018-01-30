@@ -36,9 +36,16 @@ gulp.task('test-mocha', ['test-script-format'], () => (
         }))
 ));
 
-gulp.task('test', ['test-script-format', 'test-mocha']);
+// gulp.task('test', ['test-script-format', 'test-mocha']);
 
-gulp.task('build-script', ['test'], () => (
+// gulp.task('build-script', ['test'], () => (
+//     gulp.src(['./src/index.js'])
+//         .pipe(webpackStream(webpackConfig, webpack))
+//         .pipe(header(banner, { pkg }))
+//         .pipe(gulp.dest('./lib/'))
+// ));
+
+gulp.task('build-script', () => (
     gulp.src(['./src/index.js'])
         .pipe(webpackStream(webpackConfig, webpack))
         .pipe(header(banner, { pkg }))

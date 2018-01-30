@@ -18,6 +18,7 @@ class CheckboxTree extends React.Component {
         name: PropTypes.string,
         nameAsArray: PropTypes.bool,
         noCascade: PropTypes.bool,
+        onlyCascadeDown: PropTypes.bool,
         optimisticToggle: PropTypes.bool,
         showNodeIcon: PropTypes.bool,
         onCheck: PropTypes.func,
@@ -32,10 +33,11 @@ class CheckboxTree extends React.Component {
         name: undefined,
         nameAsArray: false,
         noCascade: false,
+        onlyCascadeDown: false,
         optimisticToggle: true,
         showNodeIcon: true,
-        onCheck: () => {},
-        onExpand: () => {},
+        onCheck: () => { },
+        onExpand: () => { },
     };
 
     constructor(props) {
@@ -63,9 +65,9 @@ class CheckboxTree extends React.Component {
     }
 
     onCheck(node) {
-        const { noCascade, onCheck } = this.props;
+        const { noCascade, onlyCascadeDown, onCheck } = this.props;
 
-        this.toggleChecked(node, node.checked, noCascade);
+        this.toggleChecked(node, node.checked, noCascade, onlyCascadeDown);
         onCheck(this.serializeList('checked'));
     }
 
@@ -93,15 +95,35 @@ class CheckboxTree extends React.Component {
         });
     }
 
-    getCheckState(node, noCascade) {
+    getCheckState(node, noCascade, onlyCascadeDown) {
+
+        // Handle noCascade + OnlyCasecadeDown:
+        if (noCascade && onlyCascadeDown) {
+            if (node.checked) {
+                return 1;
+            } else {
+                if (node.children !== null) {
+                    var someChildIsChecked = this.isSomeChildChecked(node);
+                    if (someChildIsChecked) {
+                        return 2;
+                    } else {
+                        return 0;
+                    }
+                } else {
+                    return 0;
+                }
+            }
+        }
+
+        // Handle standard noCascade:    
         if (node.children === null || noCascade) {
             return node.checked ? 1 : 0;
         }
 
+        // Handle Cascade:
         if (this.isEveryChildChecked(node)) {
             return 1;
         }
-
         if (this.isSomeChildChecked(node)) {
             return 2;
         }
@@ -121,16 +143,30 @@ class CheckboxTree extends React.Component {
         return Boolean(node.disabled);
     }
 
-    toggleChecked(node, isChecked, noCascade) {
-        if (node.children === null || noCascade) {
-            // Set the check status of a leaf node or an uncoupled parent
+    toggleChecked(node, isChecked, noCascade, onlyCascadeDown) {
+
+        // Handle noCascade + OnlyCasecadeDown:
+        if (noCascade && onlyCascadeDown) {
             this.toggleNode('checked', node, isChecked);
+            if (node.children !== null) {
+                node.children.forEach((child) => {
+                    this.toggleChecked(child, isChecked, noCascade, onlyCascadeDown);
+                });
+            }
         } else {
-            // Percolate check status down to all children
-            node.children.forEach((child) => {
-                this.toggleChecked(child, isChecked);
-            });
+            // Original code 
+            if (node.children === null || noCascade) {
+                // Set the check status of a leaf node or an uncoupled parent
+                this.toggleNode('checked', node, isChecked);
+            } else {
+                // Percolate check status down to all children
+                node.children.forEach((child) => {
+                    this.toggleChecked(child, isChecked, noCascade, onlyCascadeDown);
+                });
+            }
         }
+
+
     }
 
     toggleNode(key, node, toggleValue) {
@@ -188,6 +224,9 @@ class CheckboxTree extends React.Component {
 
     isSomeChildChecked(node) {
         return node.children.some((child) => {
+
+            if (child.checked) { return true; }
+
             if (child.children !== null) {
                 return this.isSomeChildChecked(child);
             }
@@ -201,12 +240,13 @@ class CheckboxTree extends React.Component {
             disabled,
             expandDisabled,
             noCascade,
+            onlyCascadeDown,
             optimisticToggle,
             showNodeIcon,
         } = this.props;
         const treeNodes = nodes.map((node) => {
             const key = `${node.value}`;
-            const checked = this.getCheckState(node, noCascade);
+            const checked = this.getCheckState(node, noCascade, onlyCascadeDown);
             const children = this.renderChildNodes(node);
             const nodeDisabled = this.getDisabledState(node, parent, disabled, noCascade);
 
