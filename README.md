@@ -26,19 +26,20 @@ Now you can add a reference to this module in another project via:
 npm install MikeAtWest/react-checkbox-tree --save
 ```
 
-To update the code, you'll need to 
+To update the code, you'll need to:
 * Check out a copy of this repo via git clone https://github.com/MikeAtWest/react-checkbox-tree.git
-* git examples (to run build and creation of /examples code, which runs with BrowserSync for hot reloading while developing)
+* 'gulp examples' (to run build and creation of /examples code, which runs with BrowserSync for hot reloading while developing)
 * Make changes to the /src/js files.
 
-* Once done, then gulp build (which will update the contents of the /lib folder)
-
+Once done, then:
+* gulp build (which will update the contents of the /lib folder)
 * git add .
 * git commit -m "Comment"
 * git push 
 
 Then in your referring project:
 * npm update MikeAtWest/react-checkbox-tree --save
+* Use **'import * as CheckboxTree from "../../../../../node_modules/react-checkbox-tree/lib/";'**, not 'import * as CheckboxTree from "react-checkbox-tree";', otherwise Webpack uses the compiled lib published by the unforked package, not the lib/index.js code in the fork!
 
 
 
