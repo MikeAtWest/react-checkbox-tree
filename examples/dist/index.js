@@ -397,6 +397,8 @@ var CheckboxTree = function (_React$Component) {
         _this.id = 'rct-' + (0, _nanoid2.default)(7);
         _this.nodes = {};
 
+        _this.forkFlag = "forkFlag"; // This is just used so that I can confirm this is a fork in the compiled code.
+
         _this.flattenNodes(props.nodes);
         _this.unserializeLists({
             checked: props.checked,

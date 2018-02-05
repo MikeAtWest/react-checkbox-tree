@@ -46,6 +46,8 @@ class CheckboxTree extends React.Component {
         this.id = `rct-${nanoid(7)}`;
         this.nodes = {};
 
+        this.forkFlag = "forkFlag"; // This is just used so that I can confirm this is a fork in the compiled code.
+
         this.flattenNodes(props.nodes);
         this.unserializeLists({
             checked: props.checked,
