@@ -38,7 +38,8 @@ Once done, then:
 * git push 
 
 Then in your referring project:
-* npm update MikeAtWest/react-checkbox-tree --save
+* npm uninstall react-checkbox-tree --save
+* npm install MikeAtWest/react-checkbox-tree --save
 * Use **'import * as CheckboxTree from "../../../../../node_modules/react-checkbox-tree/lib/";'**, not 'import * as CheckboxTree from "react-checkbox-tree";', otherwise Webpack uses the compiled lib published by the unforked package, not the lib/index.js code in the fork!
 
 
